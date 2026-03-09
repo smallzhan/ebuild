@@ -154,7 +154,8 @@ jobs:
                                       --with-toolkit-scroll-bars      \
                                       --with-tree-sitter              \
                                       --with-xml2                     \
-                                      --with-zlib
+                                      --with-zlib                     \
+                                      --with-sqlite3
           make -j4 && make install
           ditto nextstep/Emacs.app Emacs.app
           echo version=$(Emacs.app/Contents/MacOS/Emacs --version | sed -nE 's/^GNU Emacs ([0-9.]+).*/\1/p') >> $GITHUB_ENV
@@ -180,7 +181,8 @@ jobs:
                                       --with-toolkit-scroll-bars      \
                                       --with-tree-sitter              \
                                       --with-xml2                     \
-                                      --with-zlib
+                                      --with-zlib                     \
+                                      --with-sqlite3
           make -j4 && make install
           ditto nextstep/Emacs.app Emacs.app
           echo igc_version=$(Emacs.app/Contents/MacOS/Emacs --version | sed -nE 's/^GNU Emacs ([0-9.]+).*/\1/p') >> $GITHUB_ENV
