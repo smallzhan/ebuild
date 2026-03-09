@@ -3,11 +3,11 @@ name: MacOS Build for GNU Emacs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 1 * * *'
 
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - name: Uninstall Homebrew
         run: |
@@ -122,6 +122,12 @@ jobs:
           make -j4
           sudo make install
           sudo find /usr/local/lib -name 'libtree-sitter*.dylib' -delete
+      - name: Install SQLite3
+        run: |
+          curl -O https://sqlite.org/2026/sqlite-autoconf-3520000.tar.gz
+          tar -zxf sqlite-autoconf-3520000.tar.gz && cd sqlite-autoconf-3520000
+          ./configure --disable-shared && make -j4
+          sudo make install
       - name: Install GNU Gzip
         run: |
           curl -LO https://ftpmirror.gnu.org/gnu/gzip/gzip-1.14.tar.gz
@@ -155,7 +161,7 @@ jobs:
           tar -Jcf Emacs.tar.xz Emacs.app
       - name: Build Emacs with MPS
         run: |
-          git clone -b 'feature/igc' --depth 1 https://github.com/emacs-mirror/emacs.git emacs-igc
+          git clone -b 'feature/igc3' --depth 1 https://github.com/emacs-mirror/emacs.git emacs-igc
           cd emacs-igc && sed -i '' '/darwin/ s/lncurses/lncursesw/g' configure.ac
           ./autogen.sh && ./configure CFLAGS='-O2 -g0 -flto=thin'     \
                                       PKG_CONFIG='pkgconf -static'    \
