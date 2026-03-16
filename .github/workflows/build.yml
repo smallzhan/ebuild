@@ -192,8 +192,10 @@ jobs:
         with:
           name: Emacs-${{ env.version }}
           path: emacs/Emacs.tar.xz
+          retention-days: 10
       - name: Upload Emacs with MPS
         uses: actions/upload-artifact@v6
         with:
           name: Emacs-MPS-${{ env.igc_version }}
           path: emacs-igc/Emacs-MPS.tar.xz
+          retention-days: 10
