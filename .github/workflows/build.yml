@@ -199,3 +199,20 @@ jobs:
           name: Emacs-MPS-${{ env.igc_version }}
           path: emacs-igc/Emacs-MPS.tar.xz
           retention-days: 10
+  cleanup:    
+    name: Keep only last 3 successful runs    
+    runs-on: ubuntu-latest    
+    needs: build          # 等 build job 完成后才执行    
+    if: success()         # 只有 build 成功时才触发清理    
+    permissions:      
+      actions: write    
+    steps:      
+      - name: Delete old successful runs        
+        uses: Mattraks/delete-workflow-runs@v2        
+        with:          
+          token: ${{ github.token }}          
+          repository: ${{ github.repository }}          
+          retain_days: 0          
+          keep_minimum_runs: 3          
+          delete_run_by_conclusion_pattern: success          
+          delete_workflow_pattern: "MacOS Build for GNU Emacs"
