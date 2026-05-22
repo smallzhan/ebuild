@@ -25,14 +25,14 @@ jobs:
           sudo make install
       - name: Install GNU Autoconf
         run: |
-          curl -LO https://ftp.wayne.edu/gnu/autoconf/autoconf-2.72.tar.gz
-          tar -zxf autoconf-2.72.tar.gz && cd autoconf-2.72
+          curl -LO https://ftp.wayne.edu/gnu/autoconf/autoconf-2.73.tar.gz
+          tar -zxf autoconf-2.73.tar.gz && cd autoconf-2.73
           ./configure && make -j4
           sudo make install
       - name: Install GNU Automake
         run: |
-          curl -LO https://ftp.wayne.edu/gnu/automake/automake-1.18.tar.gz
-          tar -zxf automake-1.18.tar.gz && cd automake-1.18
+          curl -LO https://ftp.wayne.edu/gnu/automake/automake-1.18.1.tar.gz
+          tar -zxf automake-1.18.1.tar.gz && cd automake-1.18.1
           ./configure && make -j4
           sudo make install
       - name: Install GNU Libtool
@@ -87,8 +87,8 @@ jobs:
           sudo make install
       - name: Install Libxml2
         run: |
-          curl -O https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.2.tar.xz
-          tar -Jxf libxml2-2.15.2.tar.xz && cd libxml2-2.15.2
+          curl -O https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.3.tar.xz
+          tar -Jxf libxml2-2.15.3.tar.xz && cd libxml2-2.15.3
           ./configure --disable-shared && make -j4
           sudo make install
       - name: Install GNU Libgmp
@@ -99,8 +99,8 @@ jobs:
           sudo make install
       - name: Install Libnettle
         run: |
-          curl -LO https://ftp.wayne.edu/gnu/nettle/nettle-3.10.2.tar.gz
-          tar -zxf nettle-3.10.2.tar.gz && cd nettle-3.10.2
+          curl -LO https://ftp.wayne.edu/gnu/nettle/nettle-4.0.tar.gz
+          tar -zxf nettle-4.0.tar.gz && cd nettle-4.0
           ./configure --disable-shared && make -j4
           sudo make install
       - name: Install Libidn2
@@ -111,14 +111,14 @@ jobs:
           sudo make install
       - name: Install GnuTLS
         run: |
-          curl -O https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-3.8.12.tar.xz
-          tar -Jxf gnutls-3.8.12.tar.xz && cd gnutls-3.8.12
+          curl -O https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-3.8.13.tar.xz
+          tar -Jxf gnutls-3.8.13.tar.xz && cd gnutls-3.8.13
           ./configure --disable-shared --with-included-libtasn1 --without-p11-kit && make -j4
           sudo make install
       - name: Install Libtreesitter
         run: |
-          curl -LO https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v0.26.6.tar.gz
-          tar -zxf v0.26.6.tar.gz && cd tree-sitter-0.26.6
+          curl -LO https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v0.26.8.tar.gz
+          tar -zxf v0.26.8.tar.gz && cd tree-sitter-0.26.8
           make -j4
           sudo make install
           sudo find /usr/local/lib -name 'libtree-sitter*.dylib' -delete
