@@ -136,8 +136,8 @@ jobs:
           sudo make install
       - name: Build Emacs 31
         run: |
-          git clone -b 'emacs-31' --depth 1 https://github.com/emacs-mirror/emacs.git
-          cd emacs && sed -i '' '/darwin/ s/lncurses/lncursesw/g' configure.ac
+          git clone -b 'emacs-31' --depth 1 https://github.com/emacs-mirror/emacs.git emacs-31
+          cd emacs-31 && sed -i '' '/darwin/ s/lncurses/lncursesw/g' configure.ac
           ./autogen.sh && ./configure CFLAGS='-O2 -g0 -flto=thin'     \
                                       PKG_CONFIG='pkgconf -static'    \
                                       --disable-gc-mark-trace         \
@@ -159,7 +159,7 @@ jobs:
           make -j4 && make install
           ditto nextstep/Emacs.app Emacs.app
           echo version_31=$(Emacs.app/Contents/MacOS/Emacs --version | sed -nE 's/^GNU Emacs ([0-9.]+).*/\1/p') >> $GITHUB_ENV
-          tar -Jcf Emacs31.tar.xz Emacs.app
+          tar -Jcf Emacs-31.tar.xz Emacs.app
       - name: Build Emacs Master
         run: |
           git clone --depth 1 https://github.com/emacs-mirror/emacs.git
