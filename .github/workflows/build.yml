@@ -134,7 +134,33 @@ jobs:
           tar -zxf gzip-1.14.tar.gz && cd gzip-1.14
           ./configure && make -j4
           sudo make install
-      - name: Build Emacs
+      - name: Build Emacs 31
+        run: |
+          git clone -b 'emacs-31' --depth 1 https://github.com/emacs-mirror/emacs.git
+          cd emacs && sed -i '' '/darwin/ s/lncurses/lncursesw/g' configure.ac
+          ./autogen.sh && ./configure CFLAGS='-O2 -g0 -flto=thin'     \
+                                      PKG_CONFIG='pkgconf -static'    \
+                                      --disable-gc-mark-trace         \
+                                      --without-all                   \
+                                      --with-compress-install         \
+                                      --with-file-notification=kqueue \
+                                      --with-gmp                      \
+                                      --with-gnutls                   \
+                                      --with-modules                  \
+                                      --with-native-image-api         \
+                                      --with-ns                       \
+                                      --with-small-ja-dic             \
+                                      --with-threads                  \
+                                      --with-toolkit-scroll-bars      \
+                                      --with-tree-sitter              \
+                                      --with-xml2                     \
+                                      --with-zlib                     \
+                                      --with-sqlite3
+          make -j4 && make install
+          ditto nextstep/Emacs.app Emacs.app
+          echo version_31=$(Emacs.app/Contents/MacOS/Emacs --version | sed -nE 's/^GNU Emacs ([0-9.]+).*/\1/p') >> $GITHUB_ENV
+          tar -Jcf Emacs31.tar.xz Emacs.app
+      - name: Build Emacs Master
         run: |
           git clone --depth 1 https://github.com/emacs-mirror/emacs.git
           cd emacs && sed -i '' '/darwin/ s/lncurses/lncursesw/g' configure.ac
@@ -192,6 +218,12 @@ jobs:
         with:
           name: Emacs-${{ env.version }}
           path: emacs/Emacs.tar.xz
+          retention-days: 10
+      - name: Upload Emacs 31
+        uses: actions/upload-artifact@v6
+        with:
+          name: Emacs-${{ env.version_31 }}
+          path: emacs/Emacs31.tar.xz
           retention-days: 10
       - name: Upload Emacs with MPS
         uses: actions/upload-artifact@v6
