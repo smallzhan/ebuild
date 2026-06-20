@@ -223,7 +223,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: Emacs-${{ env.version_31 }}
-          path: emacs/Emacs-31.tar.xz
+          path: emacs-31/Emacs-31.tar.xz
           retention-days: 10
       - name: Upload Emacs with MPS
         uses: actions/upload-artifact@v6
